@@ -1,6 +1,7 @@
-// DOM variables
+// DOM element variables
 var flightsEl = document.getElementById('flights');
 var destinationsEl = document.getElementById('destinations');
+var pictureEl = document.getElementById('APOD');
 
 // Function to retrieve data on the next 5 upcoming launches
 function getLaunched() {
@@ -15,7 +16,7 @@ function getLaunched() {
             var data = data.result;
             console.log(data);
             for (var i = 0; i < data.length; i++) {
-                //Create a list element
+                // Creates a list element for each upcoming flight
                 var flightsListItem = document.createElement('input');
                 var flightsListLabel = document.createElement('label');
                 var br = document.createElement('br');
@@ -23,13 +24,11 @@ function getLaunched() {
                 flightsListItem.setAttribute('type', 'radio');
                 flightsListItem.setAttribute('name', 'flight');
         
-                //Set the text of the list element to the JSON response property
+                // Sets the text of the list element to the JSON response property
                 flightsListLabel.innerHTML = data[i].date_str + ' - ' + data[i].name + ', ' + data[i].pad.location.name;
                 flightsListLabel.setAttribute('for', data[i].name);
-
-                // flightsListItem.textContent = data[i].date_str + ' - ' + data[i].name + ', ' + data[i].pad.location.name
         
-                //Append the li element to the HTML id 
+                // Adds the li element to the HTML id 
                 flightsEl.appendChild(br);
                 flightsEl.appendChild(flightsListItem);
                 flightsEl.appendChild(flightsListLabel);
@@ -53,7 +52,7 @@ function getDestination() {
             
             for (var i = 0; i < data.length; i++) {
                     if (data[i].isPlanet == true) {
-                    //Create a list element
+                    // Creates a list element for each result that is a planet
                     var destinationsListItem = document.createElement('input');
                     var destinationsListLabel = document.createElement('label');
                     var br = document.createElement('br');
@@ -61,13 +60,11 @@ function getDestination() {
                     destinationsListItem.setAttribute('type', 'radio');
                     destinationsListItem.setAttribute('name', 'destination');
                     
-                    //Set the text of the list element to the JSON response property
+                    // Sets the text of the list element to the JSON response property
                     destinationsListLabel.innerHTML = data[i].englishName;
                     destinationsListLabel.setAttribute('for', data[i].englishName);
-                    
-                    // destinationsListItem.textContent = data[i].date_str + ' - ' + data[i].name + ', ' + data[i].pad.location.name
-                    
-                    //Append the li element to the HTML id 
+                                       
+                    // Adds the li element to the HTML id 
                     destinationsEl.appendChild(br);
                     destinationsEl.appendChild(destinationsListItem);
                     destinationsEl.appendChild(destinationsListLabel);
@@ -78,5 +75,37 @@ function getDestination() {
         })
 }
 
+// Function to retrieve Astronomy Picture of the Day
+function getAPOD() {
+    var requestURL = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+
+    fetch(requestURL)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log(data);
+            
+            // Adds the picture to the APOD container
+            var pictureImgEl = document.createElement('img');
+            pictureImgEl.setAttribute('src', data.url);
+            pictureEl.appendChild(pictureImgEl);
+
+            // Adds title to the APOD container
+            var pictureTitleEl = document.createElement('h2');
+            pictureTitleEl.textContent = data.title;
+            pictureEl.appendChild(pictureTitleEl);
+
+            // Adds description to the APOD container
+            var pictureDescriptionEl = document.createElement('p');
+            pictureDescriptionEl.textContent = data.explanation;
+            pictureEl.appendChild(pictureDescriptionEl);
+
+
+        })
+}
+
+// Calls responses from each of the three APIs to populate the page
 getLaunched();
 getDestination();
+getAPOD();
