@@ -65,7 +65,6 @@ function getDestination() {
                     destinationsListItem.setAttribute('type', 'radio');
                     destinationsListItem.setAttribute('name', 'destination');
                     destinationsListItem.setAttribute('value', data[i].englishName);
-
                     
                     // Sets the text of the list element to the JSON response property
                     destinationsListLabel.innerHTML = data[i].englishName;
@@ -108,7 +107,6 @@ function getAPOD() {
             pictureDescriptionEl.textContent = data.explanation;
             pictureEl.appendChild(pictureDescriptionEl);
 
-
         })
 }
 
@@ -142,7 +140,10 @@ function displaySelectedValues() {
                 var data = data.collection.items;
                 console.log(data);
                 for (var i = 0; i < 3; i++) {
-                    var pictureSource = data[i].links[0].href;
+                    var dataIndex = Math.floor(Math.random() * data.length);
+                    console.log(i);
+                    console.log(dataIndex);
+                    var pictureSource = data[dataIndex].links[0].href;
                     console.log(pictureSource);
             
                     // Adds pictures to the results container
