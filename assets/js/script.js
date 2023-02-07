@@ -2,9 +2,10 @@
 var flightsEl = document.getElementById('flights');
 var destinationsEl = document.getElementById('destinations');
 var pictureEl = document.getElementById('APOD');
+var showTripButton = document.getElementById('show-trip-button');
 var flightResultsEl = document.getElementById('flightinfo');
 var planetResultsEl = document.getElementById('planetinfo');
-var showTripButton = document.getElementById('show-trip-button');
+var pictureResultsEl = document.getElementById('learn-more');
 
 // Function to retrieve data on the next 5 upcoming launches
 function getLaunched() {
@@ -40,23 +41,6 @@ function getLaunched() {
             }
         })
 }
-
-// Function to populate results fields based on user selections upon button click
-function displaySelectedValues() {
-
-    var flightValue = document.querySelector('input[name="flight"]:checked').value;
-    var destinationValue = document.querySelector('input[name="destination"]:checked').value;
-
-    console.log(flightValue);
-    console.log(destinationValue);
-
-    flightResultsEl.innerHTML = "Flight: " + flightValue;
-    planetResultsEl.innerHTML = "Destination: " + destinationValue;
-
-}
-
-showTripButton.addEventListener('click', displaySelectedValues);
-
 
 // Function to retrieve planetary info
 function getDestination() {
@@ -132,3 +116,46 @@ function getAPOD() {
 getLaunched();
 getDestination();
 getAPOD();
+
+// Function to populate results fields based on user selections upon button click
+function displaySelectedValues() {
+
+    var flightValue = document.querySelector('input[name="flight"]:checked').value;
+    var destinationValue = document.querySelector('input[name="destination"]:checked').value;
+
+    console.log(flightValue);
+    console.log(destinationValue);
+
+    flightResultsEl.innerHTML = "Flight: " + flightValue;
+    planetResultsEl.innerHTML = "Destination: " + destinationValue;
+
+    // Function to use user input to fetch pictures from NASA API
+    function getPictures() {
+        var requestURL = 'https://images-api.nasa.gov/search?keywords=' + destinationValue + '&media_type=image';
+    
+        fetch(requestURL)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                console.log(data);
+                var data = data.collection.items;
+                console.log(data);
+                for (var i = 0; i < 3; i++) {
+                    var pictureSource = data[i].links[0].href;
+                    console.log(pictureSource);
+            
+                    // Adds pictures to the results container
+                    var pictureImgEl = document.createElement('img');
+                    pictureImgEl.setAttribute('src', pictureSource);
+                    pictureResultsEl.appendChild(pictureImgEl);
+    
+                }
+            })
+    }
+
+    getPictures();
+
+}
+
+showTripButton.addEventListener('click', displaySelectedValues);
