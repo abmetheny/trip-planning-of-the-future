@@ -2,6 +2,9 @@
 var flightsEl = document.getElementById('flights');
 var destinationsEl = document.getElementById('destinations');
 var pictureEl = document.getElementById('APOD');
+var flightResultsEl = document.getElementById('flightinfo');
+var planetResultsEl = document.getElementById('planetinfo');
+var showTripButton = document.getElementById('show-trip-button');
 
 // Function to retrieve data on the next 5 upcoming launches
 function getLaunched() {
@@ -23,7 +26,8 @@ function getLaunched() {
 
                 flightsListItem.setAttribute('type', 'radio');
                 flightsListItem.setAttribute('name', 'flight');
-        
+                flightsListItem.setAttribute('value', data[i].date_str + ' - ' + data[i].name + ', ' + data[i].pad.location.name);
+
                 // Sets the text of the list element to the JSON response property
                 flightsListLabel.innerHTML = data[i].date_str + ' - ' + data[i].name + ', ' + data[i].pad.location.name;
                 flightsListLabel.setAttribute('for', data[i].name);
@@ -33,9 +37,26 @@ function getLaunched() {
                 flightsEl.appendChild(flightsListItem);
                 flightsEl.appendChild(flightsListLabel);
 
-              }
+            }
         })
 }
+
+// Function to populate results fields based on user selections upon button click
+function displaySelectedValues() {
+
+    var flightValue = document.querySelector('input[name="flight"]:checked').value;
+    var destinationValue = document.querySelector('input[name="destination"]:checked').value;
+
+    console.log(flightValue);
+    console.log(destinationValue);
+
+    flightResultsEl.innerHTML = "Flight: " + flightValue;
+    planetResultsEl.innerHTML = "Destination: " + destinationValue;
+
+}
+
+showTripButton.addEventListener('click', displaySelectedValues);
+
 
 // Function to retrieve planetary info
 function getDestination() {
@@ -59,6 +80,8 @@ function getDestination() {
                     
                     destinationsListItem.setAttribute('type', 'radio');
                     destinationsListItem.setAttribute('name', 'destination');
+                    destinationsListItem.setAttribute('value', data[i].englishName);
+
                     
                     // Sets the text of the list element to the JSON response property
                     destinationsListLabel.innerHTML = data[i].englishName;
@@ -68,7 +91,7 @@ function getDestination() {
                     destinationsEl.appendChild(br);
                     destinationsEl.appendChild(destinationsListItem);
                     destinationsEl.appendChild(destinationsListLabel);
-                    
+        
                 }
 
             }
