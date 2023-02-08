@@ -65,7 +65,6 @@ function getDestination() {
                     destinationsListItem.setAttribute('type', 'radio');
                     destinationsListItem.setAttribute('name', 'destination');
                     destinationsListItem.setAttribute('value', data[i].englishName);
-
                     
                     // Sets the text of the list element to the JSON response property
                     destinationsListLabel.innerHTML = data[i].englishName;
@@ -108,7 +107,6 @@ function getAPOD() {
             pictureDescriptionEl.textContent = data.explanation;
             pictureEl.appendChild(pictureDescriptionEl);
 
-
         })
 }
 
@@ -129,12 +127,60 @@ function displaySelectedValues() {
     flightResultsEl.innerHTML = "Flight: " + flightValue;
     planetResultsEl.innerHTML = "Destination: " + destinationValue;
 
+    // Function to query API to get more data about user selected input and displays in the destination container
+    function getAdditionalData() {
+        var requestURL = 'https://api.le-systeme-solaire.net/rest/bodies/';
+    
+        fetch(requestURL)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                console.log(data);
+                var data = data.bodies;
+                console.log(data);
+
+                for (var i = 0; i < data.length; i++) {
+                    // console.log(data[i].englishName);
+                    // console.log(destinationValue);
+                
+                    if (data[i].englishName == destinationValue) {
+                    // Creates a list element
+                    console.log(data[i].moons.length);
+                    var moons = document.createElement('li');
+                    var avgTemp = document.createElement('li');
+                    var gravity = document.createElement('li');
+
+                    var br = document.createElement('br');
+                    
+                    // Sets the text of the list element to the JSON response property
+                    moons.innerHTML = 'Moons: ' + data[i].moons.length;
+                    avgTemp.innerHTML = 'Average Temp: ' + data[i].avgTemp;
+                    gravity.innerHTML = 'Gravity: ' + data[i].gravity;
+                 
+                    // Adds the li element to the HTML id 
+                    planetResultsEl.appendChild(br);
+                    planetResultsEl.appendChild(moons);
+                    planetResultsEl.appendChild(avgTemp);
+                    planetResultsEl.appendChild(gravity);
+
+        
+                    }
+                }
+    
+                
+        })
+
+
+    }
+
+
 
 
 
     // Function to use user input to fetch pictures from NASA API
     function getPictures() {
-        var requestURL = 'https://images-api.nasa.gov/search?keywords=' + destinationValue + '&media_type=image';
+        var requestURL = 'https://images-api.nasa.gov/search?q=' + destinationValue + '&media_type=image';
     
         fetch(requestURL)
             .then(function(response) {
@@ -145,7 +191,10 @@ function displaySelectedValues() {
                 var data = data.collection.items;
                 console.log(data);
                 for (var i = 0; i < 3; i++) {
-                    var pictureSource = data[i].links[0].href;
+                    var dataIndex = Math.floor(Math.random() * data.length);
+                    console.log(i);
+                    console.log(dataIndex);
+                    var pictureSource = data[dataIndex].links[0].href;
                     console.log(pictureSource);
             
                     // Adds pictures to the results container
@@ -160,7 +209,9 @@ function displaySelectedValues() {
     }
 
     getPictures();
-  
+    getAdditionalData();
+
+
 }
 
 showTripButton.addEventListener('click', displaySelectedValues);
