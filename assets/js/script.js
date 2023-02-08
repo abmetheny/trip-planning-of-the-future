@@ -129,6 +129,9 @@ function displaySelectedValues() {
     flightResultsEl.innerHTML = "Flight: " + flightValue;
     planetResultsEl.innerHTML = "Destination: " + destinationValue;
 
+
+
+
     // Function to use user input to fetch pictures from NASA API
     function getPictures() {
         var requestURL = 'https://images-api.nasa.gov/search?keywords=' + destinationValue + '&media_type=image';
@@ -152,10 +155,12 @@ function displaySelectedValues() {
     
                 }
             })
+         localStorage.setItem("saved-flight", flightValue);
+        localStorage.setitem("saved-destination", JSON.stringify(destinationValue));
     }
 
     getPictures();
-
+  
 }
 
 showTripButton.addEventListener('click', displaySelectedValues);
