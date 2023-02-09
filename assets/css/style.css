@@ -1,0 +1,31 @@
+
+.slideContainer, .picture {
+    float:middle;
+    margin:auto;
+    width:100%;
+    max-width:400px;
+    height:300px;
+    position:relative;
+}
+
+.picture {
+    position:absolute;
+}
+
+.slideContainer img {
+width:400px;
+height:300px;
+object-fit: cover;
+
+}
+
+.btn {
+    cursor: pointer;
+    position:absolute;
+    padding:5px;
+    top: 50%;
+}
+
+.next-btn {
+    right: 0;
+}
