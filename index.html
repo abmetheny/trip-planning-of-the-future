@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,24 +12,25 @@
     <!-- Update page title -->
     <title>Document</title>
 </head>
+
 <body>
     <div id="first-page-container" class="content">
 
         <h1 id="page-header" class="level">Stellar Travel</h1>
 
         <div id="first-page-body-container" class="columns">
-            
+
             <div id="flights-container" class="column is-one-third box">
                 <h1>Plan Your Journey</h1>
-                
+
                 <p id="flights" class="field">Choose your flight:</p>
-                
+
                 <p id="destinations" class="field">Choose your destination:</p>
-                
+                <!-- Added onclick to gather searches to add to storage -->
                 <button id="show-trip-button" class="button">Show me my trip!</button>
-                
+
             </div>
-            
+
             <div id="APOD"></div>
 
         </div>
@@ -42,40 +44,45 @@
             <button class="button">Save Itinerary</button>
         </div>
 
-        <h2 id="flightinfo"> Chosen flight informtion displayed here.</p>
-        <h2 id="planetinfo"> Generated information from planet selection displayed here.</p>
-        <h2 id="learn-more" class="level">Learn more about your destination:</h2>
+        <h3 id="flightinfo"> Chosen flight informtion displayed here.</h3>
+        <h4 id="planetinfo"> Generated information from planet selection displayed here.</h4>
+        <h5 id="learn-more" class="level">Learn more about your destination:</h5>
         <div id="learn-more-images" class="image columns"></div>
 
         <button id="previous-destinations-button" class="button">Previous Destinations</button>
+        <div id="previous-searches-div">
+            Here is some text inside previous searches div
+        </div>
 
     </div>
 
     <div id="saved-container">
     </div>
-    
-    <div class= "slideContainer">
+
+    <div class="slideContainer">
 
         <div class="picture slides-1">
             <img src="./assets/images/birmingham.jpg">
         </div>
-    
+
         <div class="picture slides-2">
             <img src="./assets/images/discover.jpg">
         </div>
-    
+
         <div class="picture slides-3">
             <img src="./assets/images/germany.jpg">
         </div>
-    
+
         <div class="picture slides-4">
             <img src="./assets/images/london.jpg">
         </div>
-        
-        <button class= "btn next-btn" onclick="plusSlides(1)" > > </button>
-        <button class= "btn prev-btn" onclick="plusSlides(-1)" > < </button>
-    </div>    
+
+        <button class="btn next-btn" onclick="plusSlides(1)"> > </button>
+        <button class="btn prev-btn" onclick="plusSlides(-1)">
+            < </button>
+    </div>
 
     <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
