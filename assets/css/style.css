@@ -1,0 +1,18 @@
+#APOD {
+    padding: 0px 15px;
+}
+
+#flights-container {
+    padding: 25px
+}
+
+#page-header {
+    padding: 5px;
+    margin: 5px;
+    justify-content: center;
+}
+
+#learn-more-images img {
+    width: 100%;
+    max-height: 300px;
+}

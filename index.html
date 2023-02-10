@@ -5,38 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Insert link to non-Bootstrap CSS framework -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
     <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Update page title -->
     <title>Document</title>
 </head>
 <body>
+    <div id="first-page-container" class="content">
 
-    <div id="flights-container">
-        <h1>Plan Your Journey</h1>
+        <h1 id="page-header" class="level">Stellar Travel</h1>
 
-        <p id="flights">Choose your flight:</p>
+        <div id="first-page-body-container" class="columns">
+            
+            <div id="flights-container" class="column is-one-third box">
+                <h1>Plan Your Journey</h1>
+                
+                <p id="flights" class="field">Choose your flight:</p>
+                
+                <p id="destinations" class="field">Choose your destination:</p>
+                
+                <button id="show-trip-button" class="button">Show me my trip!</button>
+                
+            </div>
+            
+            <div id="APOD"></div>
 
-        <p id="destinations">Choose your destination:</p>
+        </div>
 
-        <button id="show-trip-button">Show me my trip!</button>
-
-        <div id="APOD"></div>
-        
     </div>
 
-    <div id="results-container">
-        <button>Save Itinerary</button>
+    <div id="results-container" class="content">
+
+        <div id="header-container" class="columns">
+            <h1 id="results-header" class="column is-four-fifths">About Your Journey</h1>
+            <button class="button">Save Itinerary</button>
+        </div>
 
         <h2 id="flightinfo"> Chosen flight informtion displayed here.</p>
         <h2 id="planetinfo"> Generated information from planet selection displayed here.</p>
-        <h2 id="learn-more">Learn more about your destination:</h2>
+        <h2 id="learn-more" class="level">Learn more about your destination:</h2>
+        <div id="learn-more-images" class="image columns"></div>
+
+        <button id="previous-destinations-button" class="button">Previous Destinations</button>
 
     </div>
 
     
     <div id="saved-container">
-        <h1>Previous Destinations:</h1>
     </div>
     
 

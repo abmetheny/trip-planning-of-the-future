@@ -5,7 +5,7 @@ var pictureEl = document.getElementById('APOD');
 var showTripButton = document.getElementById('show-trip-button');
 var flightResultsEl = document.getElementById('flightinfo');
 var planetResultsEl = document.getElementById('planetinfo');
-var pictureResultsEl = document.getElementById('learn-more');
+var pictureResultsEl = document.getElementById('learn-more-images');
 
 // Function to retrieve data on the next 5 upcoming launches
 function getLaunched() {
@@ -151,18 +151,24 @@ function displaySelectedValues() {
                     var avgTemp = document.createElement('li');
                     var gravity = document.createElement('li');
 
-                    var br = document.createElement('br');
+                    var ul = document.createElement('ul');
                     
                     // Sets the text of the list element to the JSON response property
                     moons.innerHTML = 'Moons: ' + data[i].moons.length;
                     avgTemp.innerHTML = 'Average Temp: ' + data[i].avgTemp;
                     gravity.innerHTML = 'Gravity: ' + data[i].gravity;
+
+                    // Adds classes to newly created html elements
+                    // moons.classList.add("card-content");
+                    // avgTemp.classList.add("card-content");
+                    // gravity.classList.add("card-content");
+
                  
                     // Adds the li element to the HTML id 
-                    planetResultsEl.appendChild(br);
-                    planetResultsEl.appendChild(moons);
-                    planetResultsEl.appendChild(avgTemp);
-                    planetResultsEl.appendChild(gravity);
+                    planetResultsEl.appendChild(ul);
+                    ul.appendChild(moons);
+                    ul.appendChild(avgTemp);
+                    ul.appendChild(gravity);
 
         
                     }
@@ -199,13 +205,17 @@ function displaySelectedValues() {
             
                     // Adds pictures to the results container
                     var pictureImgEl = document.createElement('img');
+                    pictureImgEl.classList.add("columns");
+                    // pictureImgEl.classList.add("is-one-quarter");
+
+
                     pictureImgEl.setAttribute('src', pictureSource);
                     pictureResultsEl.appendChild(pictureImgEl);
     
                 }
             })
-         localStorage.setItem("saved-flight", flightValue);
-        localStorage.setitem("saved-destination", JSON.stringify(destinationValue));
+        //  localStorage.setItem("saved-flight", flightValue);
+        // localStorage.setitem("saved-destination", JSON.stringify(destinationValue));
     }
 
     getPictures();
