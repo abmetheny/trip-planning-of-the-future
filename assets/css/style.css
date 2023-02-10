@@ -25,7 +25,24 @@ object-fit: cover;
     padding:5px;
     top: 50%;
 }
+#APOD {
+    padding: 0px 15px;
+}
+
+#flights-container {
+    padding: 25px
+}
+
+#page-header {
+    padding: 5px;
+    margin: 5px;
+    justify-content: center;
+}
 
 .next-btn {
     right: 0;
+}
+#learn-more-images img {
+    width: 100%;
+    max-height: 300px;
 }
