@@ -215,3 +215,40 @@ function displaySelectedValues() {
 }
 
 showTripButton.addEventListener('click', displaySelectedValues);
+
+//for picture carousel -- RA
+// initially starting from index 0
+var startImage = 0;
+//initiate functions automatically
+slideCarousel(startImage);
+
+function plusSlides(n) {
+    slideCarousel(startImage +=1) ;
+}
+
+function currentSlide(n) {
+    slideCarousel(startImage = n);
+}
+
+function slideCarousel(n)
+{   
+    //initial count equal to 0 and will increment on it
+    var c ;
+
+    var images = document.getElementsByClassName("picture");
+    //console.log("image carousel", images);
+
+    if (n > images.length) {startImage = 1}
+    if (n < 1) {startImage = images.length}
+
+    for (c = 0; c < images.length; c ++ ){
+        images[c].style.display="none";
+    }
+
+    //console.log("images[startImage-1] ", images[startImage-1]);
+
+    //console.log("images[startImage-1].getElementsByClassName.display ", images[startImage-1].getElementsByClassName.display);
+    images[startImage-1].style.display = "block";
+
+}
+
