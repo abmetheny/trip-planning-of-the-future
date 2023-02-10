@@ -174,10 +174,6 @@ function displaySelectedValues() {
 
     }
 
-
-
-
-
     // Function to use user input to fetch pictures from NASA API
     function getPictures() {
         var requestURL = 'https://images-api.nasa.gov/search?q=' + destinationValue + '&media_type=image';
