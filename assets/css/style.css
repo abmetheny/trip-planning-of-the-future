@@ -29,6 +29,17 @@ object-fit: cover;
     padding: 0px 15px;
 }
 
+#picture-modal-box {
+    position: relative;
+    background-color: burlywood;
+}
+
+#modal-close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
 #flights-container {
     padding: 25px
 }

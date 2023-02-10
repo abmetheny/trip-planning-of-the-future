@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Update page title -->
-    <title>Document</title>
+    <title>Stellar Travel</title>
 </head>
 <body>
     <div id="first-page-container" class="content">
@@ -29,7 +29,18 @@
                 
             </div>
             
-            <div id="APOD"></div>
+            <div id="APOD">
+                <h2 id="APOD-title">Featured Destination: </h2>
+                <a id="APOD-learn-more" class="js-modal-trigger" data-target="picture-modal">Learn More</a>
+                <div id="picture-modal" class="modal">
+                    <div id="picture-modal-content" class="modal-content">
+                        <div id="picture-modal-box" class="box">
+                            <button id="modal-close" class="modal-close is-large"></button>
+                    </div>
+                    </div>
+                </div>
+                
+            </div>
 
         </div>
 
@@ -89,6 +100,8 @@
 
     <div id="saved-container">
     </div>
+
+    
     
     <script src="./assets/js/script.js"></script>
 </body>

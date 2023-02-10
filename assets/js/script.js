@@ -2,10 +2,18 @@
 var flightsEl = document.getElementById('flights');
 var destinationsEl = document.getElementById('destinations');
 var pictureEl = document.getElementById('APOD');
+var pictureTitleEl = document.getElementById('APOD-title');
+var pictureLearnMoreEl = document.getElementById('APOD-learn-more');
+var pictureModalEl = document.getElementById('picture-modal');
+var pictureModalContentEl = document.getElementById('picture-modal-content');
+var pictureModalBoxEl = document.getElementById('picture-modal-box');
+var pictureModalCloseEl = document.getElementById('modal-close');
 var showTripButton = document.getElementById('show-trip-button');
 var flightResultsEl = document.getElementById('flightinfo');
 var planetResultsEl = document.getElementById('planetinfo');
 var pictureResultsEl = document.getElementById('learn-more-images');
+
+var details = "";
 
 // Function to retrieve data on the next 5 upcoming launches
 function getLaunched() {
@@ -92,20 +100,32 @@ function getAPOD() {
         .then(function(data) {
             console.log(data);
             
+            // Adds title to the APOD container
+            pictureTitleEl.append(data.title);
+
             // Adds the picture to the APOD container
             var pictureImgEl = document.createElement('img');
             pictureImgEl.setAttribute('src', data.url);
-            pictureEl.appendChild(pictureImgEl);
+            pictureLearnMoreEl.append(pictureImgEl);
 
-            // Adds title to the APOD container
-            var pictureTitleEl = document.createElement('h2');
-            pictureTitleEl.textContent = data.title;
-            pictureEl.appendChild(pictureTitleEl);
 
-            // Adds description to the APOD container
-            var pictureDescriptionEl = document.createElement('p');
-            pictureDescriptionEl.textContent = data.explanation;
-            pictureEl.appendChild(pictureDescriptionEl);
+            // Adds description to the APOD
+            details = data.explanation;
+            console.log(details);
+            var modal = document.createElement('p');
+            modal.innerHTML = details;
+            pictureModalBoxEl.append(modal);
+            
+            // Functions and event listeners to display/hide additional APOD information in modal 
+            function displayDetails() {
+                pictureModalEl.classList.add("is-active");
+            };
+            function hideDetails() {
+                pictureModalEl.classList.remove("is-active");
+
+            }
+            pictureLearnMoreEl.addEventListener('click', displayDetails);
+            pictureModalCloseEl.addEventListener('click', hideDetails);
 
         })
 }
