@@ -2,6 +2,10 @@
 var flightsEl = document.getElementById('flights');
 var destinationsEl = document.getElementById('destinations');
 var pictureEl = document.getElementById('APOD');
+var showTripButton = document.getElementById('show-trip-button');
+var flightResultsEl = document.getElementById('flightinfo');
+var planetResultsEl = document.getElementById('planetinfo');
+var pictureResultsEl = document.getElementById('learn-more');
 
 // Function to retrieve data on the next 5 upcoming launches
 function getLaunched() {
@@ -23,7 +27,8 @@ function getLaunched() {
 
                 flightsListItem.setAttribute('type', 'radio');
                 flightsListItem.setAttribute('name', 'flight');
-        
+                flightsListItem.setAttribute('value', data[i].date_str + ' - ' + data[i].name + ', ' + data[i].pad.location.name);
+
                 // Sets the text of the list element to the JSON response property
                 flightsListLabel.innerHTML = data[i].date_str + ' - ' + data[i].name + ', ' + data[i].pad.location.name;
                 flightsListLabel.setAttribute('for', data[i].name);
@@ -33,7 +38,7 @@ function getLaunched() {
                 flightsEl.appendChild(flightsListItem);
                 flightsEl.appendChild(flightsListLabel);
 
-              }
+            }
         })
 }
 
@@ -59,6 +64,7 @@ function getDestination() {
                     
                     destinationsListItem.setAttribute('type', 'radio');
                     destinationsListItem.setAttribute('name', 'destination');
+                    destinationsListItem.setAttribute('value', data[i].englishName);
                     
                     // Sets the text of the list element to the JSON response property
                     destinationsListLabel.innerHTML = data[i].englishName;
@@ -68,7 +74,7 @@ function getDestination() {
                     destinationsEl.appendChild(br);
                     destinationsEl.appendChild(destinationsListItem);
                     destinationsEl.appendChild(destinationsListLabel);
-                    
+        
                 }
 
             }
@@ -101,7 +107,6 @@ function getAPOD() {
             pictureDescriptionEl.textContent = data.explanation;
             pictureEl.appendChild(pictureDescriptionEl);
 
-
         })
 }
 
@@ -109,6 +114,107 @@ function getAPOD() {
 getLaunched();
 getDestination();
 getAPOD();
+
+// Function to populate results fields based on user selections upon button click
+function displaySelectedValues() {
+
+    var flightValue = document.querySelector('input[name="flight"]:checked').value;
+    var destinationValue = document.querySelector('input[name="destination"]:checked').value;
+
+    console.log(flightValue);
+    console.log(destinationValue);
+
+    flightResultsEl.innerHTML = "Flight: " + flightValue;
+    planetResultsEl.innerHTML = "Destination: " + destinationValue;
+
+    // Function to query API to get more data about user selected input and displays in the destination container
+    function getAdditionalData() {
+        var requestURL = 'https://api.le-systeme-solaire.net/rest/bodies/';
+    
+        fetch(requestURL)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                console.log(data);
+                var data = data.bodies;
+                console.log(data);
+
+                for (var i = 0; i < data.length; i++) {
+                    // console.log(data[i].englishName);
+                    // console.log(destinationValue);
+                
+                    if (data[i].englishName == destinationValue) {
+                    // Creates a list element
+                    console.log(data[i].moons.length);
+                    var moons = document.createElement('li');
+                    var avgTemp = document.createElement('li');
+                    var gravity = document.createElement('li');
+
+                    var br = document.createElement('br');
+                    
+                    // Sets the text of the list element to the JSON response property
+                    moons.innerHTML = 'Moons: ' + data[i].moons.length;
+                    avgTemp.innerHTML = 'Average Temp: ' + data[i].avgTemp;
+                    gravity.innerHTML = 'Gravity: ' + data[i].gravity;
+                 
+                    // Adds the li element to the HTML id 
+                    planetResultsEl.appendChild(br);
+                    planetResultsEl.appendChild(moons);
+                    planetResultsEl.appendChild(avgTemp);
+                    planetResultsEl.appendChild(gravity);
+
+        
+                    }
+                }
+    
+                
+        })
+
+
+    }
+
+
+
+
+
+    // Function to use user input to fetch pictures from NASA API
+    function getPictures() {
+        var requestURL = 'https://images-api.nasa.gov/search?q=' + destinationValue + '&media_type=image';
+    
+        fetch(requestURL)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                console.log(data);
+                var data = data.collection.items;
+                console.log(data);
+                for (var i = 0; i < 3; i++) {
+                    var dataIndex = Math.floor(Math.random() * data.length);
+                    console.log(i);
+                    console.log(dataIndex);
+                    var pictureSource = data[dataIndex].links[0].href;
+                    console.log(pictureSource);
+            
+                    // Adds pictures to the results container
+                    var pictureImgEl = document.createElement('img');
+                    pictureImgEl.setAttribute('src', pictureSource);
+                    pictureResultsEl.appendChild(pictureImgEl);
+    
+                }
+            })
+         localStorage.setItem("saved-flight", flightValue);
+        localStorage.setitem("saved-destination", JSON.stringify(destinationValue));
+    }
+
+    getPictures();
+    getAdditionalData();
+
+
+}
+
+showTripButton.addEventListener('click', displaySelectedValues);
 
 //for picture carousel -- RA
 // initially starting from index 0
