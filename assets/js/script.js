@@ -95,7 +95,7 @@ function getDestination() {
 
 // Function to retrieve Astronomy Picture of the Day
 function getAPOD() {
-    var requestURL = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+    var requestURL = 'https://api.nasa.gov/planetary/apod?api_key=GVt2GrNth9Xesu8NrHdzPm1UxRUol2NSiPOveKeM ';
 
     fetch(requestURL)
         .then(function (response) {
@@ -294,11 +294,13 @@ function renderLocalStorageInfoToPage() {
         return null;
     }
 
+    previousSearchesContainer.innerHTML = '';
+
     previousSearchesArray.forEach((planetAndLaunchObj) => {
         const launchDiv = document.createElement('div');
         const pTag = document.createElement('p');
         pTag.innerHTML = `
-        Previous search: ${planetAndLaunchObj.launch} and planet ${planetAndLaunchObj.planetName}
+        Previous flights: ${planetAndLaunchObj.launch} to ${planetAndLaunchObj.planetName}
         `
         // append my pTag to my launchDiv
         launchDiv.append(pTag);
