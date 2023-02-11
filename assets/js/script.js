@@ -1,6 +1,8 @@
 // DOM element variables
+var landingContainerEl = document.getElementById('first-page-container');
 var flightsEl = document.getElementById('flights');
 var destinationsEl = document.getElementById('destinations');
+var errorMessageEl = document.getElementById('error-message');
 var pictureEl = document.getElementById('APOD');
 var pictureTitleEl = document.getElementById('APOD-title');
 var pictureLearnMoreEl = document.getElementById('APOD-learn-more');
@@ -9,12 +11,18 @@ var pictureModalContentEl = document.getElementById('picture-modal-content');
 var pictureModalBoxEl = document.getElementById('picture-modal-box');
 var pictureModalCloseEl = document.getElementById('modal-close');
 var showTripButton = document.getElementById('show-trip-button');
+var resultsContainerEl = document.getElementById('results-container');
 var flightResultsEl = document.getElementById('flightinfo');
 var planetResultsEl = document.getElementById('planetinfo');
 var pictureResultsEl = document.getElementById('learn-more-images');
 var previousSearchesArray = JSON.parse(localStorage.getItem('launchesAndPlanets')) || [];
 var previousSearchesContainer = document.getElementById('previous-searches-div');
 var launchAndPlanetObject = {}
+var previousModalEl = document.getElementById('previous-modal');
+var previousModalContentEl = document.getElementById('previous-modal-content');
+var previousModalBoxEl = document.getElementById('previous-modal-box');
+var previousModalCloseEl = document.getElementById('previous-modal-close');
+var previousDestinationsButton = document.getElementById('previous-destinations-button');
 
 var details = "";
 
@@ -140,8 +148,14 @@ function getAPOD() {
 // Function to populate results fields based on user selections upon button click
 function displaySelectedValues() {
 
+    
     var flightValue = document.querySelector('input[name="flight"]:checked').value;
     var destinationValue = document.querySelector('input[name="destination"]:checked').value;
+    
+    // Check to see if values are selected; if not, reveals error message
+    // if (flightValue == null || destinationValue == null){
+    //     errorMessageEl.classList.remove('is-hidden');
+    // }
 
     // save the flightValue and destinationValue variables to our launchAndPlanetObject
     launchAndPlanetObject.launch = flightValue;
@@ -210,6 +224,14 @@ function displaySelectedValues() {
 
 
             })
+
+            function showHidePages() {
+
+                landingContainerEl.classList.add('is-hidden');
+                resultsContainerEl.classList.remove('is-hidden');
+            }
+
+        showHidePages();
 
 
     }
@@ -297,20 +319,32 @@ function renderLocalStorageInfoToPage() {
         return null;
     }
 
-    previousSearchesContainer.innerHTML = '';
+    // previousSearchesContainer.innerHTML = '';
 
     previousSearchesArray.forEach((planetAndLaunchObj) => {
         const launchDiv = document.createElement('div');
-        const pTag = document.createElement('p');
-        pTag.innerHTML = `
-        Previous flights: ${planetAndLaunchObj.launch} to ${planetAndLaunchObj.planetName}
+        const liTag = document.createElement('li');
+        liTag.innerHTML = `
+        ${planetAndLaunchObj.launch} to ${planetAndLaunchObj.planetName}
         `
         // append my pTag to my launchDiv
-        launchDiv.append(pTag);
+        launchDiv.append(liTag);
 
         // now append my launchDiv to an element which already exists in my DOM, i.e the webpage
-        previousSearchesContainer.append(launchDiv);
+        previousSearchesContainer.appendChild(launchDiv);
     });
+
+
+    // Functions and event listeners to display/hide previous searches in modal 
+    function displayDetails() {
+        previousModalEl.classList.add("is-active");
+    };
+    function hideDetails() {
+        previousModalEl.classList.remove("is-active");
+
+    }
+    previousDestinationsButton.addEventListener('click', displayDetails);
+    previousModalCloseEl.addEventListener('click', hideDetails);
 
 }
 

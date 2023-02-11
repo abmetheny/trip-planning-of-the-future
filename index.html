@@ -26,6 +26,11 @@
 
                 <p id="destinations" class="field">Choose your destination:</p>
                 <!-- Added onclick to gather searches to add to storage -->
+                <article id="error-message" class="message is-danger is-hidden">
+                    <div class="message-body">
+                      Please select a flight and a destination.
+                    </div>
+                  </article>
                 <button id="show-trip-button" class="button">Show me my trip!</button>
 
             </div>
@@ -42,7 +47,7 @@
                     </div>
                 </div>
 
-                <h2 id="slide-title" class="level">More places:</h2>
+                <h2 id="slide-title" class="level">More to Explore:</h2>
                 <div class="slideContainer level">
 
 
@@ -125,7 +130,7 @@
     <!-- </div> -->
 
 
-    <div id="results-container" class="content page-container">
+    <div id="results-container" class="content page-container is-hidden">
 
         <!-- <div id="header-container"> -->
             <h1 id="results-header" class="level p-5 is-size-1">About Your Journey</h1>
@@ -141,10 +146,17 @@
 
     </div>
 
-    <div id="saved-container" class="page-container">
-        <div id="previous-searches-div">
-            Here is some text inside previous searches div
-        </div>
+    <div id="saved-container">
+        <div id="previous-modal" class="modal">
+            <div id="previous-modal-content" class="modal-content">
+                <div id="previous-modal-box" class="box">
+                    <div id="previous-searches-div">
+                        <p>Previous Searches:</p>
+                    </div>
+                    <button id="previous-modal-close" class="modal-close is-large"></button>
+                </div>
+            </div>
+
     </div>
 
     

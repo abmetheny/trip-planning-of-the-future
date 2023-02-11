@@ -55,6 +55,7 @@ object-fit: cover;
     padding: 25px;
     margin: 15px;
     margin-top: 0px;
+    background-color: gainsboro;
 }
 
 #flights-container input {
@@ -96,4 +97,15 @@ object-fit: cover;
     padding: 5px;
     margin: 5px;
     justify-content: center;
+}
+
+#previous-modal-box {
+    position: relative;
+    background-color: burlywood;
+}
+
+#previous-modal-close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
 }
