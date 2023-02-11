@@ -9,12 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <!-- Update page title -->
     <title>Stellar Travel</title>
 </head>
 
 <body>
-    <div id="first-page-container" class="content">
+    <div id="first-page-container" class="content page-container">
 
         <h1 id="page-header" class="level p-5 is-size-1">Stellar Travel</h1>
 
@@ -32,7 +31,7 @@
             </div>
 
             
-            <div id="APOD">
+            <div id="APOD" class="column">
                 <h2 id="APOD-title">Featured Destination: </h2>
                 <a id="APOD-learn-more" class="js-modal-trigger" data-target="picture-modal">Learn More</a>
                 <div id="picture-modal" class="modal">
@@ -43,9 +42,9 @@
                     </div>
                 </div>
 
-                <div class="slideContainer">
+                <h2 id="slide-title" class="level">More places:</h2>
+                <div class="slideContainer level">
 
-                    <h2 id="slide-title">More places:</h2>
 
 
                     <div class="picture slides-1">
@@ -126,7 +125,7 @@
     <!-- </div> -->
 
 
-    <div id="results-container" class="content">
+    <div id="results-container" class="content page-container">
 
         <div id="header-container" class="columns">
             <h1 id="results-header" class="column is-four-fifths">About Your Journey</h1>
@@ -142,7 +141,7 @@
 
     </div>
 
-    <div id="saved-container">
+    <div id="saved-container" class="page-container">
         <div id="previous-searches-div">
             Here is some text inside previous searches div
         </div>

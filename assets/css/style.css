@@ -1,7 +1,18 @@
+body {
+    background-image: url('https://www.nasa.gov/sites/default/files/thumbnails/image/main_image_star-forming_region_carina_nircam_final-5mb.jpg');
+    background-color: black;
+    padding: 75px 60px;
+}
+
+.page-container {
+    background-color: white;
+    padding: 0px 13px;
+    opacity: 90%;
+}
 
 .slideContainer, .picture {
     float:middle;
-    margin:auto;
+    margin: 10px auto;
     width:100%;
     max-width:400px;
     height:300px;
@@ -41,7 +52,13 @@ object-fit: cover;
 }
 
 #flights-container {
-    padding: 25px
+    padding: 25px;
+    margin: 15px;
+    margin-top: 0px;
+}
+
+#flights-container input {
+    margin: 0px 5px;
 }
 
 #page-header {
@@ -53,11 +70,18 @@ object-fit: cover;
 .next-btn {
     right: 0;
 }
-#learn-more-images img {
+#APOD-learn-more-images img {
     width: 100%;
     max-height: 300px;
 }
 
+.content h5 {
+    margin-bottom: 0px;
+}
 
+#APOD-learn-more img {
+    width: 100%;
+    max-height: 500px;
+}
 
 

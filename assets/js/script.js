@@ -106,6 +106,9 @@ function getAPOD() {
 
 
             // Adds the picture to the APOD container
+            var pictureTitleContent = document.createElement('h5');
+            pictureTitleContent.textContent = data.title;
+            pictureTitleEl.append(pictureTitleContent);
             var pictureImgEl = document.createElement('img');
             pictureImgEl.setAttribute('src', data.url);
             pictureLearnMoreEl.append(pictureImgEl);
