@@ -84,4 +84,16 @@ object-fit: cover;
     max-height: 500px;
 }
 
+#header-container {
+    padding: 10px;
+}
 
+#results-container button {
+    margin: 10px;
+}
+
+#results-header {
+    padding: 5px;
+    margin: 5px;
+    justify-content: center;
+}

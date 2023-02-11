@@ -235,8 +235,8 @@ function displaySelectedValues() {
 
                     // Adds pictures to the results container
                     var pictureImgEl = document.createElement('img');
-                    pictureImgEl.classList.add("columns");
-                    // pictureImgEl.classList.add("is-one-quarter");
+                    pictureImgEl.classList.add("column");
+                    pictureImgEl.classList.add("is-one-third");
 
 
                     pictureImgEl.setAttribute('src', pictureSource);
@@ -323,3 +323,4 @@ renderLocalStorageInfoToPage();
 
 // add event listeners here
 showTripButton.addEventListener('click', displaySelectedValues);
+
