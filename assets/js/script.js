@@ -172,6 +172,7 @@ function displaySelectedValues() {
     console.log(flightValue);
     console.log(destinationValue);
 
+    // Populates results page with user selected data
     flightResultsEl.innerHTML = "Flight: " + flightValue;
     planetResultsEl.innerHTML = "Destination: " + destinationValue;
 
@@ -189,42 +190,43 @@ function displaySelectedValues() {
                 console.log(data);
 
                 for (var i = 0; i < data.length; i++) {
-                    // console.log(data[i].englishName);
-                    // console.log(destinationValue);
 
+                    // Searched the data array for a match to user inputs to return additional data
                     if (data[i].englishName == destinationValue) {
-                        // Creates a list element
+                        // Creates a list element for each property to return
                         console.log(data[i].moons.length);
+                        var ul = document.createElement('ul');
                         var moons = document.createElement('li');
                         var avgTemp = document.createElement('li');
                         var gravity = document.createElement('li');
-
-                        var ul = document.createElement('ul');
+                        var tilt = document.createElement('li');
+                        var mass = document.createElement('li');
+                        var flattening = document.createElement('li');
+                        var inclination = document.createElement('li');
 
                         // Sets the text of the list element to the JSON response property
                         moons.innerHTML = 'Moons: ' + data[i].moons.length;
                         avgTemp.innerHTML = 'Average Temp: ' + data[i].avgTemp;
                         gravity.innerHTML = 'Gravity: ' + data[i].gravity;
+                        tilt.innerHTML = 'Tilt: ' + data[i].axialTilt;
+                        mass.innerHTML = 'Mass: ' + data[i].mass.massValue;
+                        flattening.innerHTML = 'Flattening: ' + data[i].flattening;
+                        inclination.innerHTML = 'Inclination: ' + data[i].inclination;
 
-                        // Adds classes to newly created html elements
-                        // moons.classList.add("card-content");
-                        // avgTemp.classList.add("card-content");
-                        // gravity.classList.add("card-content");
-
-
-                        // Adds the li element to the HTML id 
-                        planetResultsEl.appendChild(ul);
-                        ul.appendChild(moons);
-                        ul.appendChild(avgTemp);
-                        ul.appendChild(gravity);
-
-
+                        // Adds the li element to the newly created ul 
+                        planetResultsEl.append(ul);
+                        ul.append(avgTemp);
+                        ul.append(gravity);
+                        ul.append(moons);
+                        ul.append(tilt);
+                        ul.append(mass);
+                        ul.append(flattening);
+                        ul.append(inclination);
                     }
                 }
-
-
             })
 
+            // Hides landing page and displays results page
             function showHidePages() {
 
                 landingContainerEl.classList.add('is-hidden');
@@ -232,7 +234,6 @@ function displaySelectedValues() {
             }
 
         showHidePages();
-
 
     }
 
@@ -248,6 +249,7 @@ function displaySelectedValues() {
                 console.log(data);
                 var data = data.collection.items;
                 console.log(data);
+                // Returns a random selection of three pictures based on user selected destination
                 for (var i = 0; i < 3; i++) {
                     var dataIndex = Math.floor(Math.random() * data.length);
                     console.log(i);
@@ -259,23 +261,18 @@ function displaySelectedValues() {
                     var pictureImgEl = document.createElement('img');
                     pictureImgEl.classList.add("column");
                     pictureImgEl.classList.add("is-one-third");
-
-
                     pictureImgEl.setAttribute('src', pictureSource);
                     pictureResultsEl.appendChild(pictureImgEl);
 
                 }
             })
-        //  localStorage.setItem("saved-flight", flightValue);
-        // localStorage.setitem("saved-destination", JSON.stringify(destinationValue));
+        
     }
 
     getPictures();
     getAdditionalData();
 
-
 }
-
 
 //for picture carousel -- RA
 // initially starting from index 0
@@ -312,14 +309,11 @@ function slideCarousel(n) {
 
 }
 
-
 function renderLocalStorageInfoToPage() {
     // if the previousSearch array has no items in it, just return out of this function
     if (previousSearchesArray.length == 0) {
         return null;
     }
-
-    // previousSearchesContainer.innerHTML = '';
 
     previousSearchesArray.forEach((planetAndLaunchObj) => {
         const launchDiv = document.createElement('div');
@@ -348,8 +342,7 @@ function renderLocalStorageInfoToPage() {
 
 }
 
-
-// Calls responses from each of the three APIs to populate the page
+// Calls responses from each of the three APIs to populate the page and saves selections in local storage
 getLaunched();
 getDestination();
 getAPOD();

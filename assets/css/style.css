@@ -10,6 +10,25 @@ body {
     opacity: 90%;
 }
 
+#page-header {
+    padding: 5px;
+    margin: 5px;
+    justify-content: center;
+}
+
+/* Landing page sidebar styles */
+#flights-container {
+    padding: 25px;
+    margin: 15px;
+    margin-top: 0px;
+    background-color: gainsboro;
+}
+
+#flights-container input {
+    margin: 0px 5px;
+}
+
+/* Carousel styles */
 .slideContainer, .picture {
     float:middle;
     margin: 10px auto;
@@ -36,44 +55,14 @@ object-fit: cover;
     padding:5px;
     top: 50%;
 }
-#APOD {
-    padding: 0px 15px;
-}
-
-#picture-modal-box {
-    position: relative;
-    background-color: burlywood;
-}
-
-#modal-close {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-}
-
-#flights-container {
-    padding: 25px;
-    margin: 15px;
-    margin-top: 0px;
-    background-color: gainsboro;
-}
-
-#flights-container input {
-    margin: 0px 5px;
-}
-
-#page-header {
-    padding: 5px;
-    margin: 5px;
-    justify-content: center;
-}
 
 .next-btn {
     right: 0;
 }
-#APOD-learn-more-images img {
-    width: 100%;
-    max-height: 300px;
+
+/* Picture of the day styles */
+#APOD {
+    padding: 0px 15px;
 }
 
 .content h5 {
@@ -85,18 +74,33 @@ object-fit: cover;
     max-height: 500px;
 }
 
-#header-container {
-    padding: 10px;
+/* Picture of the day modal styles */
+#picture-modal-box {
+    position: relative;
+    background-color: burlywood;
 }
 
-#results-container button {
-    margin: 10px;
+#modal-close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+
+/* Second page/results page styles */
+#header-container {
+    padding: 10px;
 }
 
 #results-header {
     padding: 5px;
     margin: 5px;
     justify-content: center;
+}
+
+/* Previous searches modal styles */
+#results-container button {
+    margin: 10px;
 }
 
 #previous-modal-box {
