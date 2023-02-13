@@ -146,15 +146,24 @@ function getAPOD() {
 // Function to populate results fields based on user selections upon button click
 function displaySelectedValues() {
 
-    
-    var flightValue = document.querySelector('input[name="flight"]:checked').value;
-    var destinationValue = document.querySelector('input[name="destination"]:checked').value;
-    
-    // Check to see if values are selected; if not, reveals error message
-    // if (flightValue == null || destinationValue == null){
-    //     errorMessageEl.classList.remove('is-hidden');
-    // }
+    var flightEl = document.querySelector('input[name="flight"]:checked');
+    var destinationEl = document.querySelector('input[name="destination"]:checked');
 
+    if (!flightEl || !destinationEl) {
+        errorMessageEl.classList.remove('is-hidden');
+        return;
+    }
+
+    else {
+        errorMessageEl.classList.add('is-hidden');
+    }
+
+    var flightValue = flightEl.value;
+    var destinationValue = destinationEl.value;
+
+    console.log(flightValue);
+    console.log(destinationValue);
+    
     // save the flightValue and destinationValue variables to our launchAndPlanetObject
     launchAndPlanetObject.launch = flightValue;
     launchAndPlanetObject.planetName = destinationValue;
@@ -192,7 +201,6 @@ function displaySelectedValues() {
                     // Searched the data array for a match to user inputs to return additional data
                     if (data[i].englishName == destinationValue) {
                         // Creates a list element for each property to return
-                        console.log(data[i].moons.length);
                         var ul = document.createElement('ul');
                         var bodyType = document.createElement('li');
                         var moons = document.createElement('li');
@@ -203,9 +211,14 @@ function displaySelectedValues() {
                         var flattening = document.createElement('li');
                         var inclination = document.createElement('li');
 
+                        var moonCount = 0;
+                        if (data[i].moons) {
+                            moonCount = data[i].moons.length;
+                        }
+
                         // Sets the text of the list element to the JSON response property
                         bodyType.innerHTML = 'Body Type: ' + data[i].bodyType;
-                        moons.innerHTML = 'Moons: ' + data[i].moons.length;
+                        moons.innerHTML = 'Moons: ' + moonCount;
                         avgTemp.innerHTML = 'Mean Temperature: ' + data[i].avgTemp;
                         gravity.innerHTML = 'Surface Gravity: ' + data[i].gravity;
                         tilt.innerHTML = 'Tilt: ' + data[i].axialTilt;
