@@ -143,8 +143,6 @@ function getAPOD() {
         })
 }
 
-
-
 // Function to populate results fields based on user selections upon button click
 function displaySelectedValues() {
 
@@ -196,6 +194,7 @@ function displaySelectedValues() {
                         // Creates a list element for each property to return
                         console.log(data[i].moons.length);
                         var ul = document.createElement('ul');
+                        var bodyType = document.createElement('li');
                         var moons = document.createElement('li');
                         var avgTemp = document.createElement('li');
                         var gravity = document.createElement('li');
@@ -205,16 +204,18 @@ function displaySelectedValues() {
                         var inclination = document.createElement('li');
 
                         // Sets the text of the list element to the JSON response property
+                        bodyType.innerHTML = 'Body Type: ' + data[i].bodyType;
                         moons.innerHTML = 'Moons: ' + data[i].moons.length;
-                        avgTemp.innerHTML = 'Average Temp: ' + data[i].avgTemp;
-                        gravity.innerHTML = 'Gravity: ' + data[i].gravity;
+                        avgTemp.innerHTML = 'Mean Temperature: ' + data[i].avgTemp;
+                        gravity.innerHTML = 'Surface Gravity: ' + data[i].gravity;
                         tilt.innerHTML = 'Tilt: ' + data[i].axialTilt;
-                        mass.innerHTML = 'Mass: ' + data[i].mass.massValue;
+                        mass.innerHTML = 'Mass Value: ' + data[i].mass.massValue;
                         flattening.innerHTML = 'Flattening: ' + data[i].flattening;
                         inclination.innerHTML = 'Inclination: ' + data[i].inclination;
 
                         // Adds the li element to the newly created ul 
                         planetResultsEl.append(ul);
+                        ul.append(bodyType);
                         ul.append(avgTemp);
                         ul.append(gravity);
                         ul.append(moons);
@@ -328,7 +329,6 @@ function renderLocalStorageInfoToPage() {
         previousSearchesContainer.appendChild(launchDiv);
     });
 
-
     // Functions and event listeners to display/hide previous searches in modal 
     function displayDetails() {
         previousModalEl.classList.add("is-active");
@@ -346,7 +346,6 @@ function renderLocalStorageInfoToPage() {
 getLaunched();
 getDestination();
 getAPOD();
-renderLocalStorageInfoToPage();
 
 // add event listeners here
 showTripButton.addEventListener('click', displaySelectedValues);
