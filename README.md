@@ -29,6 +29,19 @@ There are plenty of websites that can help you plan a trip anywhere on Earth. Bu
 
 
 
+## Future Developments
+
+- Display additional planetary data as it becomes available with improved technology
+
+- Add sub-types to destinations as we take manned flights beyond our solar system
+
+- Add a date picker to choose from more than just the next 5 rocket launches
+
+- Add Videos from the former visitors when they return
+
+- Add a rating/comment system for traveler feedback
+
+
 
 
 ## Credits
