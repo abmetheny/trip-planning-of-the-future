@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Stellar Travel</title>
+    <title>Stellar Travels</title>
 </head>
 
 <body>
     <!-- Container for the entire landing page -->
     <div id="first-page-container" class="content page-container">
 
-        <h1 id="page-header" class="level p-5 is-size-1">Stellar Travel</h1>
+        <h1 id="page-header" class="level p-5 is-size-1">Stellar Travels</h1>
 
         <!-- Container for everything below the header -->
         <div id="first-page-body-container" class="columns">
@@ -105,6 +105,9 @@
         <!-- Button to display local storage in a modal -->
         <button id="previous-destinations-button" class="button">Previous Searches</button>
 
+        <button id="back-button" class="button">Back</button>
+
+
     </div>
 
     <!-- Modal elements populated by local storage -->
@@ -114,6 +117,7 @@
                 <div id="previous-modal-box" class="box">
                     <div id="previous-searches-div">
                         <p id='previous-searches-p' class="has-text-weight-bold">Previous Searches:</p>
+                        <div id="previous-searches-list"></div>
                     </div>
                     <button id="previous-modal-close" class="modal-close is-large"></button>
                 </div>

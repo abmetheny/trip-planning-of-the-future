@@ -17,12 +17,14 @@ var planetResultsEl = document.getElementById('planetinfo');
 var pictureResultsEl = document.getElementById('learn-more-images');
 var previousSearchesArray = JSON.parse(localStorage.getItem('launchesAndPlanets')) || [];
 var previousSearchesContainer = document.getElementById('previous-searches-div');
+var previousSearchesList = document.getElementById('previous-searches-list');
 var launchAndPlanetObject = {}
 var previousModalEl = document.getElementById('previous-modal');
 var previousModalContentEl = document.getElementById('previous-modal-content');
 var previousModalBoxEl = document.getElementById('previous-modal-box');
 var previousModalCloseEl = document.getElementById('previous-modal-close');
 var previousDestinationsButton = document.getElementById('previous-destinations-button');
+var backButton = document.getElementById('back-button');
 
 var details = "";
 
@@ -35,9 +37,9 @@ function getLaunched() {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
+            // console.log(data);
             var data = data.result;
-            console.log(data);
+            // console.log(data);
             for (var i = 0; i < data.length; i++) {
                 // Creates a list element for each upcoming flight
                 var flightsListItem = document.createElement('input');
@@ -71,9 +73,9 @@ function getDestination() {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
+            // console.log(data);
             var data = data.bodies;
-            console.log(data);
+            // console.log(data);
 
             for (var i = 0; i < data.length; i++) {
                 if (data[i].isPlanet == true) {
@@ -110,7 +112,7 @@ function getAPOD() {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
+            // console.log(data);
 
 
             // Adds the picture to the APOD container
@@ -124,7 +126,7 @@ function getAPOD() {
 
             // Adds description to the APOD
             details = data.explanation;
-            console.log(details);
+            // console.log(details);
             var modal = document.createElement('p');
             modal.innerHTML = details;
             pictureModalBoxEl.append(modal);
@@ -145,9 +147,11 @@ function getAPOD() {
 
 // Function to populate results fields based on user selections upon button click
 function displaySelectedValues() {
+    console.log(JSON.parse(localStorage.getItem('launchesAndPlanets')));
+    previousSearchesArray = JSON.parse(localStorage.getItem('launchesAndPlanets')) || [];
 
-    var flightEl = document.querySelector('input[name="flight"]:checked');
-    var destinationEl = document.querySelector('input[name="destination"]:checked');
+    let flightEl = document.querySelector('input[name="flight"]:checked');
+    let destinationEl = document.querySelector('input[name="destination"]:checked');
 
     if (!flightEl || !destinationEl) {
         errorMessageEl.classList.remove('is-hidden');
@@ -158,30 +162,58 @@ function displaySelectedValues() {
         errorMessageEl.classList.add('is-hidden');
     }
 
-    var flightValue = flightEl.value;
-    var destinationValue = destinationEl.value;
+    let flightValue = flightEl.value;
+    let destinationValue = destinationEl.value;
 
-    console.log(flightValue);
-    console.log(destinationValue);
+    // console.log(flightValue);
+    // console.log(destinationValue);
     
     // save the flightValue and destinationValue variables to our launchAndPlanetObject
     launchAndPlanetObject.launch = flightValue;
     launchAndPlanetObject.planetName = destinationValue;
 
     // save my launchAndPlanetObject to local storage, but remember to stringify its contents
+    console.log('checking local storage array');
+    console.log(previousSearchesArray);
     previousSearchesArray.push(launchAndPlanetObject);
+    console.log(launchAndPlanetObject);
+    console.log(previousSearchesArray);
     const arrayStringified = JSON.stringify(previousSearchesArray);
     localStorage.setItem('launchesAndPlanets', arrayStringified);
 
     // run the renderLocalStorageInfoToPage function now as well
     renderLocalStorageInfoToPage();
 
-    console.log(flightValue);
-    console.log(destinationValue);
+    // console.log(flightValue);
+    // console.log(destinationValue);
 
     // Populates results page with user selected data
     flightResultsEl.innerHTML = "Flight: " + flightValue;
     planetResultsEl.innerHTML = "Destination: " + destinationValue;
+
+    // Function to clear and hide results and clear and show landing page upon clicking the Back button
+    function showHideResults() {
+        console.log(previousSearchesArray);
+        pictureResultsEl.innerHTML = '';
+        flightResultsEl.innerHTML = '';
+        planetResultsEl.innerHTML = '';
+
+        function clearRadio() {
+            var radioButtons = document.getElementsByTagName('input');
+            for (var i=0; i < radioButtons.length; i++){
+                if (radioButtons[i].type == 'radio') {
+                    radioButtons[i].checked = false;
+                };
+            }
+        }
+
+        clearRadio();
+
+        landingContainerEl.classList.remove('is-hidden');
+        resultsContainerEl.classList.add('is-hidden');
+    }
+    
+    backButton.addEventListener('click', showHideResults);
 
     // Function to query API to get more data about user selected input and displays in the destination container
     function getAdditionalData() {
@@ -329,17 +361,20 @@ function renderLocalStorageInfoToPage() {
         return null;
     }
 
+    previousSearchesList.innerHTML = '';
+    
     previousSearchesArray.forEach((planetAndLaunchObj) => {
+        // console.log(planetAndLaunchObj);
         const launchDiv = document.createElement('div');
         const liTag = document.createElement('li');
         liTag.innerHTML = `
         ${planetAndLaunchObj.launch} to ${planetAndLaunchObj.planetName}
         `
-        // append my pTag to my launchDiv
+        // append my liTag to my launchDiv
         launchDiv.append(liTag);
 
         // now append my launchDiv to an element which already exists in my DOM, i.e the webpage
-        previousSearchesContainer.appendChild(launchDiv);
+        previousSearchesList.appendChild(launchDiv);
     });
 
     // Functions and event listeners to display/hide previous searches in modal 
@@ -362,4 +397,3 @@ getAPOD();
 
 // add event listeners here
 showTripButton.addEventListener('click', displaySelectedValues);
-
