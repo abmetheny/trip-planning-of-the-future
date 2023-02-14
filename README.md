@@ -21,7 +21,8 @@ There are plenty of websites that can help you plan a trip anywhere on Earth. Bu
 
 ## Link
 
-![Deployed Application](assets/images/deployed-webpage.jpg)
+![Deployed Application](assets/images/deployed-webpage.png)
+![Deployed Application](assets/images/deployed-webpage-2.png)
 
 [**Click Here** to view the deployed website!](https://abmetheny.github.io/trip-planning-of-the-future)
 
