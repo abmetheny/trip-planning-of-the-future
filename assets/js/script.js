@@ -1,14 +1,30 @@
 // DOM element variables
+var landingContainerEl = document.getElementById('first-page-container');
 var flightsEl = document.getElementById('flights');
 var destinationsEl = document.getElementById('destinations');
+var errorMessageEl = document.getElementById('error-message');
 var pictureEl = document.getElementById('APOD');
+var pictureTitleEl = document.getElementById('APOD-title');
+var pictureLearnMoreEl = document.getElementById('APOD-learn-more');
+var pictureModalEl = document.getElementById('picture-modal');
+var pictureModalContentEl = document.getElementById('picture-modal-content');
+var pictureModalBoxEl = document.getElementById('picture-modal-box');
+var pictureModalCloseEl = document.getElementById('modal-close');
 var showTripButton = document.getElementById('show-trip-button');
+var resultsContainerEl = document.getElementById('results-container');
 var flightResultsEl = document.getElementById('flightinfo');
 var planetResultsEl = document.getElementById('planetinfo');
 var pictureResultsEl = document.getElementById('learn-more-images');
 var previousSearchesArray = JSON.parse(localStorage.getItem('launchesAndPlanets')) || [];
 var previousSearchesContainer = document.getElementById('previous-searches-div');
 var launchAndPlanetObject = {}
+var previousModalEl = document.getElementById('previous-modal');
+var previousModalContentEl = document.getElementById('previous-modal-content');
+var previousModalBoxEl = document.getElementById('previous-modal-box');
+var previousModalCloseEl = document.getElementById('previous-modal-close');
+var previousDestinationsButton = document.getElementById('previous-destinations-button');
+
+var details = "";
 
 // Function to retrieve data on the next 5 upcoming launches
 function getLaunched() {
@@ -87,7 +103,7 @@ function getDestination() {
 
 // Function to retrieve Astronomy Picture of the Day
 function getAPOD() {
-    var requestURL = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+    var requestURL = 'https://api.nasa.gov/planetary/apod?api_key=GVt2GrNth9Xesu8NrHdzPm1UxRUol2NSiPOveKeM ';
 
     fetch(requestURL)
         .then(function (response) {
@@ -96,32 +112,58 @@ function getAPOD() {
         .then(function (data) {
             console.log(data);
 
+
             // Adds the picture to the APOD container
+            var pictureTitleContent = document.createElement('h5');
+            pictureTitleContent.textContent = data.title;
+            pictureTitleEl.append(pictureTitleContent);
             var pictureImgEl = document.createElement('img');
             pictureImgEl.setAttribute('src', data.url);
-            pictureEl.appendChild(pictureImgEl);
+            pictureLearnMoreEl.append(pictureImgEl);
 
-            // Adds title to the APOD container
-            var pictureTitleEl = document.createElement('h2');
-            pictureTitleEl.textContent = data.title;
-            pictureEl.appendChild(pictureTitleEl);
 
-            // Adds description to the APOD container
-            var pictureDescriptionEl = document.createElement('p');
-            pictureDescriptionEl.textContent = data.explanation;
-            pictureEl.appendChild(pictureDescriptionEl);
+            // Adds description to the APOD
+            details = data.explanation;
+            console.log(details);
+            var modal = document.createElement('p');
+            modal.innerHTML = details;
+            pictureModalBoxEl.append(modal);
+            
+            // Functions and event listeners to display/hide additional APOD information in modal 
+            function displayDetails() {
+                pictureModalEl.classList.add("is-active");
+            };
+            function hideDetails() {
+                pictureModalEl.classList.remove("is-active");
+
+            }
+            pictureLearnMoreEl.addEventListener('click', displayDetails);
+            pictureModalCloseEl.addEventListener('click', hideDetails);
 
         })
 }
 
-
-
 // Function to populate results fields based on user selections upon button click
 function displaySelectedValues() {
 
-    var flightValue = document.querySelector('input[name="flight"]:checked').value;
-    var destinationValue = document.querySelector('input[name="destination"]:checked').value;
+    var flightEl = document.querySelector('input[name="flight"]:checked');
+    var destinationEl = document.querySelector('input[name="destination"]:checked');
 
+    if (!flightEl || !destinationEl) {
+        errorMessageEl.classList.remove('is-hidden');
+        return;
+    }
+
+    else {
+        errorMessageEl.classList.add('is-hidden');
+    }
+
+    var flightValue = flightEl.value;
+    var destinationValue = destinationEl.value;
+
+    console.log(flightValue);
+    console.log(destinationValue);
+    
     // save the flightValue and destinationValue variables to our launchAndPlanetObject
     launchAndPlanetObject.launch = flightValue;
     launchAndPlanetObject.planetName = destinationValue;
@@ -137,6 +179,7 @@ function displaySelectedValues() {
     console.log(flightValue);
     console.log(destinationValue);
 
+    // Populates results page with user selected data
     flightResultsEl.innerHTML = "Flight: " + flightValue;
     planetResultsEl.innerHTML = "Destination: " + destinationValue;
 
@@ -154,48 +197,59 @@ function displaySelectedValues() {
                 console.log(data);
 
                 for (var i = 0; i < data.length; i++) {
-                    // console.log(data[i].englishName);
-                    // console.log(destinationValue);
 
+                    // Searched the data array for a match to user inputs to return additional data
                     if (data[i].englishName == destinationValue) {
-                        // Creates a list element
-                        console.log(data[i].moons.length);
+                        // Creates a list element for each property to return
+                        var ul = document.createElement('ul');
+                        var bodyType = document.createElement('li');
                         var moons = document.createElement('li');
                         var avgTemp = document.createElement('li');
                         var gravity = document.createElement('li');
+                        var tilt = document.createElement('li');
+                        var mass = document.createElement('li');
+                        var flattening = document.createElement('li');
+                        var inclination = document.createElement('li');
 
-                        var ul = document.createElement('ul');
+                        var moonCount = 0;
+                        if (data[i].moons) {
+                            moonCount = data[i].moons.length;
+                        }
 
                         // Sets the text of the list element to the JSON response property
-                        moons.innerHTML = 'Moons: ' + data[i].moons.length;
-                        avgTemp.innerHTML = 'Average Temp: ' + data[i].avgTemp;
-                        gravity.innerHTML = 'Gravity: ' + data[i].gravity;
+                        bodyType.innerHTML = 'Body Type: ' + data[i].bodyType;
+                        moons.innerHTML = 'Moons: ' + moonCount;
+                        avgTemp.innerHTML = 'Mean Temperature: ' + data[i].avgTemp;
+                        gravity.innerHTML = 'Surface Gravity: ' + data[i].gravity;
+                        tilt.innerHTML = 'Tilt: ' + data[i].axialTilt;
+                        mass.innerHTML = 'Mass Value: ' + data[i].mass.massValue;
+                        flattening.innerHTML = 'Flattening: ' + data[i].flattening;
+                        inclination.innerHTML = 'Inclination: ' + data[i].inclination;
 
-                        // Adds classes to newly created html elements
-                        // moons.classList.add("card-content");
-                        // avgTemp.classList.add("card-content");
-                        // gravity.classList.add("card-content");
-
-
-                        // Adds the li element to the HTML id 
-                        planetResultsEl.appendChild(ul);
-                        ul.appendChild(moons);
-                        ul.appendChild(avgTemp);
-                        ul.appendChild(gravity);
-
-
+                        // Adds the li element to the newly created ul 
+                        planetResultsEl.append(ul);
+                        ul.append(bodyType);
+                        ul.append(avgTemp);
+                        ul.append(gravity);
+                        ul.append(moons);
+                        ul.append(tilt);
+                        ul.append(mass);
+                        ul.append(flattening);
+                        ul.append(inclination);
                     }
                 }
-
-
             })
 
+            // Hides landing page and displays results page
+            function showHidePages() {
+
+                landingContainerEl.classList.add('is-hidden');
+                resultsContainerEl.classList.remove('is-hidden');
+            }
+
+        showHidePages();
 
     }
-
-
-
-
 
     // Function to use user input to fetch pictures from NASA API
     function getPictures() {
@@ -209,6 +263,7 @@ function displaySelectedValues() {
                 console.log(data);
                 var data = data.collection.items;
                 console.log(data);
+                // Returns a random selection of three pictures based on user selected destination
                 for (var i = 0; i < 3; i++) {
                     var dataIndex = Math.floor(Math.random() * data.length);
                     console.log(i);
@@ -218,25 +273,20 @@ function displaySelectedValues() {
 
                     // Adds pictures to the results container
                     var pictureImgEl = document.createElement('img');
-                    pictureImgEl.classList.add("columns");
-                    // pictureImgEl.classList.add("is-one-quarter");
-
-
+                    pictureImgEl.classList.add("column");
+                    pictureImgEl.classList.add("is-one-third");
                     pictureImgEl.setAttribute('src', pictureSource);
                     pictureResultsEl.appendChild(pictureImgEl);
 
                 }
             })
-        //  localStorage.setItem("saved-flight", flightValue);
-        // localStorage.setitem("saved-destination", JSON.stringify(destinationValue));
+        
     }
 
     getPictures();
     getAdditionalData();
 
-
 }
-
 
 //for picture carousel -- RA
 // initially starting from index 0
@@ -273,7 +323,6 @@ function slideCarousel(n) {
 
 }
 
-
 function renderLocalStorageInfoToPage() {
     // if the previousSearch array has no items in it, just return out of this function
     if (previousSearchesArray.length == 0) {
@@ -282,25 +331,35 @@ function renderLocalStorageInfoToPage() {
 
     previousSearchesArray.forEach((planetAndLaunchObj) => {
         const launchDiv = document.createElement('div');
-        const pTag = document.createElement('p');
-        pTag.innerHTML = `
-        Previous search: ${planetAndLaunchObj.launch} and planet ${planetAndLaunchObj.planetName}
+        const liTag = document.createElement('li');
+        liTag.innerHTML = `
+        ${planetAndLaunchObj.launch} to ${planetAndLaunchObj.planetName}
         `
         // append my pTag to my launchDiv
-        launchDiv.append(pTag);
+        launchDiv.append(liTag);
 
         // now append my launchDiv to an element which already exists in my DOM, i.e the webpage
-        previousSearchesContainer.append(launchDiv);
+        previousSearchesContainer.appendChild(launchDiv);
     });
+
+    // Functions and event listeners to display/hide previous searches in modal 
+    function displayDetails() {
+        previousModalEl.classList.add("is-active");
+    };
+    function hideDetails() {
+        previousModalEl.classList.remove("is-active");
+
+    }
+    previousDestinationsButton.addEventListener('click', displayDetails);
+    previousModalCloseEl.addEventListener('click', hideDetails);
 
 }
 
-
-// Calls responses from each of the three APIs to populate the page
+// Calls responses from each of the three APIs to populate the page and saves selections in local storage
 getLaunched();
 getDestination();
 getAPOD();
-renderLocalStorageInfoToPage();
 
 // add event listeners here
 showTripButton.addEventListener('click', displaySelectedValues);
+

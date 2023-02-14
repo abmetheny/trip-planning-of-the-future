@@ -5,21 +5,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Insert link to non-Bootstrap CSS framework -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <!-- Update page title -->
-    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Stellar Travel</title>
 </head>
 
 <body>
-    <div id="first-page-container" class="content">
+    <!-- Container for the entire landing page -->
+    <div id="first-page-container" class="content page-container">
 
-        <h1 id="page-header" class="level">Stellar Travel</h1>
+        <h1 id="page-header" class="level p-5 is-size-1">Stellar Travel</h1>
 
+        <!-- Container for everything below the header -->
         <div id="first-page-body-container" class="columns">
 
+            <!-- Sidebar column elements -->
             <div id="flights-container" class="column is-one-third box">
                 <h1>Plan Your Journey</h1>
 
@@ -27,62 +27,132 @@
 
                 <p id="destinations" class="field">Choose your destination:</p>
                 <!-- Added onclick to gather searches to add to storage -->
+                <article id="error-message" class="message is-danger is-hidden">
+                    <div class="message-body">
+                      Please select a flight and a destination.
+                    </div>
+                  </article>
                 <button id="show-trip-button" class="button">Show me my trip!</button>
+            </div>
+            
+        <!-- Main body column elements -->
+            <div id="APOD" class="column">
+                <!-- Picture of the day elements -->
+                <h2 id="APOD-title">Featured Destination: </h2>
+                <a id="APOD-learn-more" class="js-modal-trigger" data-target="picture-modal">Learn More</a>
+                <!-- Picture of the day details modal elements  -->
+                <div id="picture-modal" class="modal">
+                    <div id="picture-modal-content" class="modal-content">
+                        <div id="picture-modal-box" class="box">
+                            <button id="modal-close" class="modal-close is-large"></button>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Picture carousel elements -->
+                <h2 id="slide-title" class="level">More to Explore:</h2>
+                <div class="slideContainer level">
+
+                    <div class="picture slides-0">
+                        <img src="./assets/images/image-3.gif">
+                    </div>
+
+                    <div class="picture slides-1">
+                        <img src="./assets/images/newYork.gif">
+                    </div>
+
+                    <div class="picture slides-2">
+                        <img src="./assets/images/image-4.gif">
+                    </div>
+            
+                    <div class="picture slides-3">
+                        <img src="./assets/images/romula.gif">
+                    </div>
+
+                    <div class="picture slides-4">
+                        <img src="./assets/images/image-5.gif">
+                    </div>
+            
+                    <div class="picture slides-5">
+                        <img src="./assets/images/london.gif">
+                    </div>
+
+                    <div class="picture slides-6">
+                        <img src="./assets/images/image-6.jpg">
+                    </div>
+            
+                    <div class="picture slides-7">
+                        <img src="./assets/images/germany.gif">
+                    </div>
+
+                    <div class="picture slides-8">
+                        <img src="./assets/images/image-7.jpg">
+                    </div>
+
+                    <div class="picture slides-9">
+                        <img src="./assets/images/picture-1.gif">
+                    </div>
+
+                    <div class="picture slides-10">
+                        <img src="./assets/images/image-8.jpg">
+                    </div>
+
+                    <div class="picture slides-11">
+                        <img src="./assets/images/picture-2.gif">
+                    </div>
+
+                    <div class="picture slides-12">
+                        <img src="./assets/images/image-9.jpg">
+                    </div>
+
+                    <div class="picture slides-13">
+                        <img src="./assets/images/spaceShip.gif">
+                    </div>
+            
+                    <button class= "btn next-btn" onclick="plusSlides(1)" > > </button>
+                    <button class= "btn prev-btn" onclick="plusSlides(-1)" > < </button>
+                </div>
+                
             </div>
 
-            <div id="APOD"></div>
-
         </div>
 
     </div>
 
-    <div id="results-container" class="content">
+    <!-- Container for second page/results page - hidden until "show trip" button is clicked -->
+    <div id="results-container" class="content page-container is-hidden">
 
-        <div id="header-container" class="columns">
-            <h1 id="results-header" class="column is-four-fifths">About Your Journey</h1>
-            <button class="button">Save Itinerary</button>
-        </div>
-
-        <h3 id="flightinfo"> Chosen flight informtion displayed here.</h3>
-        <h4 id="planetinfo"> Generated information from planet selection displayed here.</h4>
-        <h5 id="learn-more" class="level">Learn more about your destination:</h5>
+        <h1 id="results-header" class="level p-5 is-size-1">About Your Journey</h1>
+        
+        <!-- Data populated by user selections and API calls -->
+        <h2 id="flightinfo"></h2>
+        <h2 id="planetinfo"></h2>
+        <h2 id="learn-more" class="level">See more from your destination:</h2>
         <div id="learn-more-images" class="image columns"></div>
-
-        <button id="previous-destinations-button" class="button">Previous Destinations</button>
-        <div id="previous-searches-div">
-            Here is some text inside previous searches div
-        </div>
+                
+        <!-- Button to display local storage in a modal -->
+        <button id="previous-destinations-button" class="button">Previous Searches</button>
 
     </div>
 
+    <!-- Modal elements populated by local storage -->
     <div id="saved-container">
+        <div id="previous-modal" class="modal">
+            <div id="previous-modal-content" class="modal-content">
+                <div id="previous-modal-box" class="box">
+                    <div id="previous-searches-div">
+                        <p id='previous-searches-p' class="has-text-weight-bold">Previous Searches:</p>
+                    </div>
+                    <button id="previous-modal-close" class="modal-close is-large"></button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="slideContainer">
-
-        <div class="picture slides-1">
-            <img src="./assets/images/birmingham.jpg">
-        </div>
-
-        <div class="picture slides-2">
-            <img src="./assets/images/discover.jpg">
-        </div>
-
-        <div class="picture slides-3">
-            <img src="./assets/images/germany.jpg">
-        </div>
-
-        <div class="picture slides-4">
-            <img src="./assets/images/london.jpg">
-        </div>
-
-        <button class="btn next-btn" onclick="plusSlides(1)"> > </button>
-        <button class="btn prev-btn" onclick="plusSlides(-1)">
-            < </button>
-    </div>
-
+    
+    
     <script src="./assets/js/script.js"></script>
+
 </body>
 
 </html>
